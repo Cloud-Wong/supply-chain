@@ -101,7 +101,7 @@
 
 													<div class="form-group">
 														<label>商品入库参照</label>
-														<form:select path="product.id"
+														<form:select path="pproduct.id"
 															class="form-control selectpicker" id="lunch"
 															data-live-search="true" items="${listProduct }"
 															itemLabel="name" itemValue="id" title="请选择存货名称">
@@ -131,6 +131,8 @@
 													<form:hidden path="pcompany.id"
 														value="${sessionScope.company.id }" />
 													<form:hidden path="scompany.id"
+														value="${ itemUpshelf.company.id}" />
+													<form:hidden path="sproduct.id"
 														value="${ itemUpshelf.company.id}" />
 												</div>
 												<div class="modal-footer">

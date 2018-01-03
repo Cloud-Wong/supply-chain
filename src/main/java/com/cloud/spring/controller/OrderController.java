@@ -121,28 +121,29 @@ public class OrderController {
 	public String addOrder(@ModelAttribute("order") Order e) {
 
 		if (e.getId() == 0) {
-			// new person, add it
 			this.orderService.save(e);
 		} else {
-			// existing person, call update
 			this.orderService.update(e);
 		}
 
 		return "redirect:/SM-ord/porder";
 	}
 
+	//确认订单
 	@RequestMapping("/comfirm/{id}")
 	public String comfirm(@PathVariable("id") int id) {
 		this.orderService.confirmedOrder(id);
 		return "redirect:/SM-ord/sorder";
 	}
 
+	//发货
 	@RequestMapping("/deliver/{id}")
 	public String deliver(@PathVariable("id") int id) {
 		this.orderService.deliverGoods(id);
 		return "redirect:/SM-ord/dispatch";
 	}
 
+	//收货
 	@RequestMapping("/finish/{id}")
 	public String finish(@PathVariable("id") int id) {
 		this.orderService.finishOrder(id);

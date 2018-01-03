@@ -62,7 +62,7 @@
 										</tr>
 										<c:forEach items="${listOrder12}" var="ord">
 											<tr>
-												<td>${ord.product.name}</td>
+												<td>${ord.pproduct.name}</td>
 												<td>${ord.cost}</td>
 												<td>${ord.count}</td>
 												<td>${ord.adress }</td>
@@ -93,7 +93,7 @@
 										</tr>
 										<c:forEach items="${listOrder3}" var="ord">
 											<tr>
-												<td>${ord.product.name}</td>
+												<td>${ord.pproduct.name}</td>
 												<td>${ord.cost}</td>
 												<td>${ord.count}</td>
 												<td>${ord.adress }</td>

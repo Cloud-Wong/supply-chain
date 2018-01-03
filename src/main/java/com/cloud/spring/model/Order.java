@@ -18,7 +18,9 @@ public class Order {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@OneToOne
-	private Product product; // 采购商品
+	private Product pproduct; // 采购商品
+	@OneToOne
+	private Product sproduct; // 销售商品
 	@ManyToOne
 	private Company pcompany; // 采购公司
 	@ManyToOne
@@ -37,12 +39,22 @@ public class Order {
 		this.id = id;
 	}
 
-	public Product getProduct() {
-		return product;
+	
+
+	public Product getPproduct() {
+		return pproduct;
 	}
 
-	public void setProduct(Product product) {
-		this.product = product;
+	public void setPproduct(Product pproduct) {
+		this.pproduct = pproduct;
+	}
+
+	public Product getSproduct() {
+		return sproduct;
+	}
+
+	public void setSproduct(Product sproduct) {
+		this.sproduct = sproduct;
 	}
 
 	public Company getPcompany() {
