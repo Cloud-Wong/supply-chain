@@ -21,6 +21,7 @@ public class Product {
 	private String unit;
 	@ManyToOne
 	private Company company;
+	private int stock;
 
 	public int getId() {
 		return id;
@@ -62,6 +63,14 @@ public class Product {
 		this.company = company;
 	}
 
+	public int getStock() {
+		return stock;
+	}
+
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+
 	public Product() {
 		super();
 	}
@@ -69,7 +78,9 @@ public class Product {
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + ", safetyStock=" + safetyStock + ", unit=" + unit + ", company="
-				+ company + "]";
+				+ company + ", stock=" + stock + "]";
 	}
+	
+
 
 }

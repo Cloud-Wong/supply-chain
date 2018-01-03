@@ -101,7 +101,7 @@
 							库存管理<span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
 							<li><a
-								href="${pageContext.request.contextPath}/IM-inv/inventory">期初库存</a>
+								href="${pageContext.request.contextPath}/BI-pro/inventory">期初库存</a>
 							</li>
 							<li><a
 								href="${pageContext.request.contextPath}/SM-ord/warehousingEntry">商品入库</a></li>

@@ -11,8 +11,7 @@
 <link
 	href="${pageContext.request.contextPath}/resources/vendor/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/dist/css/bootstrap-select.css">
+
 <!-- MetisMenu CSS -->
 <link
 	href="${pageContext.request.contextPath}/resources/vendor/metisMenu/metisMenu.min.css"
@@ -27,6 +26,9 @@
 <link
 	href="${pageContext.request.contextPath}/resources/vendor/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
+<!-- bootstrapValidator  -->
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/dist/css/bootstrapValidator.css" />
 <title>供应链管理系统</title>
 </head>
 <body>
@@ -38,110 +40,85 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12">
-						<h1 class="page-header">期初库存</h1>
-						<c:if test="${!empty inventory.product.name}">
-							<form:form action="/supply-chain/IM-inv/inventory/save"
-								commandName="inventory" id="inventoryForm">
-
+						<h1 class="page-header">库存档案</h1>
+						<c:if test="${!empty product.name}">
+							<form:form action="/supply-chain/BI-pro/inventory/save"
+								commandName="product" id="supplyerForm">
+								<div style="display: none;">
 								<div class="form-group">
 									<label>ID</label>
 									<form:input path="id" type="text" class="form-control"
 										disabled="true"></form:input>
 									<form:hidden path="id" />
 								</div>
+								
+								
 								<div class="form-group">
-									<label>存货名称</label>
-									<form:select path="product.id"
-										class="form-control selectpicker" id="lunch"
-										data-live-search="true" items="${listProduct }"
-										itemLabel="name" itemValue="id" title="请选择存货名称">
-
+									<label>安全库存量</label>
+									<form:input path="safetyStock" type="text" class="form-control"
+										placeholder="安全库存量" />
+								</div>
+								<div class="form-group">
+									<label>单位</label>
+									<form:select path="unit" class="form-control">
+										<option>个</option>
+										<option>件</option>
+										<option>台</option>
+										<option>千克</option>
+										<option>吨</option>
 									</form:select>
 								</div>
-								<div class="form-group">
-									<label>数量</label>
-									<form:input path="stock" type="text" class="form-control"
-										placeholder="数量" />
-								</div>
 								<form:hidden path="company.id" value="${sessionScope.company.id }" />
+								</div>
+								<div class="form-group">
+									<label>存货名称</label>
+									<form:input path="name" type="text" class="form-control"
+										placeholder="存货名称" disabled="true"/>
+										<form:hidden path="name" />
+								</div>
+								<div class="form-group">
+									<label>库存量</label>
+									<form:input path="stock" type="text" class="form-control"
+										placeholder="库存量" />
+								</div>
+							
 								<input type="button" class="btn btn-outline btn-warning"
 									onclick="javascript:history.back(-1);" value="取消">
 								<button type="submit" class="btn btn-outline btn-info ">修改</button>
 
 							</form:form>
 						</c:if>
-						<c:if test="${empty inventory.product.name}">
-							<button style="margin-top: -63px;" data-toggle="modal"
-								data-target="#addInventory"
-								class="btn btn-outline btn-success pull-right">添加存货</button>
-							<div class="modal fade" id="addInventory" tabindex="-1"
-								role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-								<div class="modal-dialog">
 
-									<div class="modal-content">
-										<form:form action="/supply-chain/IM-inv/inventory/save"
-											commandName="inventory" id="inventoryForm">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"
-													aria-hidden="true">&times;</button>
-												<h4 class="modal-title" id="myModalLabel">添加存货</h4>
-											</div>
-											<div class="modal-body">
 
-												<div class="form-group">
-													<label>存货名称</label>
-													<form:select path="product.id"
-														class="form-control selectpicker" id="lunch"
-														data-live-search="true" items="${listProduct }"
-														itemLabel="name" itemValue="id" title="请输入存货名称">
-													</form:select>
-												</div>
-												<div class="form-group">
-													<label>数量</label>
-													<form:input path="stock" type="text" class="form-control"
-														placeholder="数量" />
-												</div>
-												<form:hidden path="company.id" value="${sessionScope.company.id }" />
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-default"
-													data-dismiss="modal">关闭</button>
-												<button type="submit" class="btn btn-primary">添加</button>
-											</div>
-										</form:form>
-									</div>
-									<!-- /.modal-content -->
-								</div>
-								<!-- /.modal -->
-							</div>
-						</c:if>
-
-						<c:if
-							test="${!empty listInventory && empty inventory.product.name}">
+						<c:if test="${!empty listProduct && empty product.name}">
 							<table class="table table-hover">
 								<tr>
 									<th>库存编号</th>
-									<th>存货名称</th>
+									<th>库存名称</th>
 									<th>单位</th>
-									<th>数量</th>
+									<th>库存量</th>
+									<th>安全库存</th>
+									<th>备注</th>
 									<th>修改</th>
-									<th>删除</th>
 								</tr>
-								<c:forEach items="${listInventory}" var="inv">
+								<c:forEach items="${listProduct}" var="pro">
 									<tr>
-										<td>${inv.id}</td>
-										<td>${inv.product.name}</td>
-										<td>${inv.product.unit }</td>
-										<td>${inv.stock }</td>
+										<td>${pro.id}</td>
+										<td>${pro.name}</td>
+										<td>${pro.unit }</td>
+										<td>${pro.stock }</td>										
+										<td>${pro.safetyStock }</td>
+										<td>
+											<c:if test="${pro.stock>=pro.safetyStock}"><p class="text-success">充足</p></c:if>
+											<c:if test="${pro.stock<pro.safetyStock}"><p class="text-warning">不足</p></c:if>
+										</td>										
 										<td><a class="btn btn-outline btn-info btn-sm"
-											href="<c:url value='/IM-inv/edit/${inv.id}' />">修改</a></td>
-										<td><a class="btn btn-outline btn-danger btn-sm"
-											href="<c:url value='/IM-inv/delete/${inv.id}' />">删除</a></td>
+											href="<c:url value='/BI-pro/adjustStock/${pro.id}' />">修改</a></td>
 									</tr>
 								</c:forEach>
 							</table>
 						</c:if>
-						<c:if test="${empty listInventory}">
+						<c:if test="${empty listProduct}">
 							<p class="text-muted">尚未添加库存信息</p>
 						</c:if>
 
@@ -171,8 +148,6 @@
 	<!-- Custom Theme JavaScript -->
 	<script
 		src="${pageContext.request.contextPath}/resources/dist/js/sb-admin-2.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/dist/js/bootstrap-select.js"></script>
 	<!-- bootstrapValidator  -->
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/dist/js/bootstrapValidator.js"></script>
@@ -180,7 +155,7 @@
 		$(document).ready(function() {
 			// Generate a simple captcha
 
-			$('#inventoryForm').bootstrapValidator({
+			$('#supplyerForm').bootstrapValidator({
 				message : 'This value is not valid',
 				feedbackIcons : {
 					valid : 'glyphicon glyphicon-ok',
@@ -188,11 +163,17 @@
 					validating : 'glyphicon glyphicon-refresh'
 				},
 				fields : {
-					
-					stock : {
+					name : {
 						validators : {
 							notEmpty : {
-								message : '库存数量不能为空'
+								message : '库存名称不能为空'
+							}
+						}
+					},
+					safetyStock : {
+						validators : {
+							notEmpty : {
+								message : '安全库存不能为空'
 							},
 							numeric: {
 		                        message: '必须为数字'
@@ -202,7 +183,10 @@
 				}
 			});
 
-
+			// Validate the form manually
+			$('#validateBtn').click(function() {
+				$('#defaultForm').bootstrapValidator('validate');
+			});
 
 		});
 	</script>

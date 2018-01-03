@@ -1,5 +1,6 @@
 package com.cloud.spring.controller;
 
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.cloud.spring.model.Company;
 import com.cloud.spring.model.Product;
 import com.cloud.spring.service.ProductService;
+
 
 @Controller
 @RequestMapping("BI-pro")
@@ -33,10 +35,16 @@ public class ProductController {
 		model.addAttribute("listProduct", this.productService.getListByCompany(c.getId()));
 		return "basicInfo/products";
 	}
+	@RequestMapping(value = "/inventory", method = RequestMethod.GET)
+	public String listInventory(Model model,HttpSession session) {
+		Company c = (Company)session.getAttribute("company");
+		model.addAttribute("listProduct", this.productService.getListByCompany(c.getId()));
+		return "inventorymana/inventorys";
+	}
 
 	// For add and update person both
 	@RequestMapping(value = "/product/save", method = RequestMethod.POST)
-	public String addPerson(@ModelAttribute("product") Product e) {
+	public String addProduct(@ModelAttribute("product") Product e) {
 
 		if (e.getId() == 0) {
 			// new person, add it
@@ -49,6 +57,17 @@ public class ProductController {
 		return "redirect:/BI-pro/product";
 
 	}
+	// For add and update person both
+	@RequestMapping(value = "/inventory/save", method = RequestMethod.POST)
+	public String addInventory(@ModelAttribute("product") Product e) {
+		
+		
+		
+		this.productService.update(e);
+				
+		return "redirect:/BI-pro/inventory";
+		
+	}
 
 	@RequestMapping("/delete/{id}")
 	public String removePerson(@PathVariable("id") int id) {
@@ -58,11 +77,18 @@ public class ProductController {
 	}
 
 	@RequestMapping("/edit/{id}")
-	public String editPerson(@PathVariable("id") int id, Model model,HttpSession session) {
+	public String editProduct(@PathVariable("id") int id, Model model,HttpSession session) {
 		Company c = (Company)session.getAttribute("company");
 		model.addAttribute("product", this.productService.getById(id));
 		model.addAttribute("listProduct", this.productService.getListByCompany(c.getId()));
 		return "basicInfo/products";
+	}
+	@RequestMapping("/adjustStock/{id}")
+	public String editInventory(@PathVariable("id") int id, Model model,HttpSession session) {
+		Company c = (Company)session.getAttribute("company");
+		model.addAttribute("product", this.productService.getById(id));
+		model.addAttribute("listProduct", this.productService.getListByCompany(c.getId()));
+		return "inventorymana/inventorys";
 	}
 
 }
